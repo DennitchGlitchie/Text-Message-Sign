@@ -7,3 +7,5 @@ https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
 it basically just outputs a header and then writes whatever text you give it as a command line argument out to the sign
 here's an example of the protocol, that explains how to write messages in different colors, etc
 http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
+
+Pro-Lite PL-M2014R
