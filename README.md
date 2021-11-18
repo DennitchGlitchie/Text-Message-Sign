@@ -9,3 +9,11 @@ here's an example of the protocol, that explains how to write messages in differ
 http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
 
 Pro-Lite PL-M2014R
+
+
+
+Email Options:
+-Fetchmail 
+
+Twilio Tutorial:
+https://classes.engineering.wustl.edu/ese205/core/index.php?title=Text_messaging_(Twilio_API)_%2B_Raspberry_Pi
