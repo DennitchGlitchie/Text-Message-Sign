@@ -4,6 +4,7 @@
 -Setting up automatic wifi by editting the config file https://dietpi.com/phpbb/viewtopic.php?p=9#p9
   -> Open dietpi-wifi.txt and open it with wordpad
   -> Change aWIFI_SSID[0]='MySSID' and aWIFI_KEY[0]='MyWifiKey'
+  -> Don't forget to also activate automatic wifi
 -Setting up ssh key for raspberry pi from laptop: ssh -i TextMessageSign root@10.0.0.128
   -> using the diet-config command to change ssh to OpenSSH and not Dropbear
   -> Use ssh-keygen to generate a key with custom name and adding the .pub file to ~/.ssh/authorized_keys (remember to respond "Yes")
@@ -16,9 +17,10 @@
   -> Creating tunnel.sh with correct permissions (chmod 777 tunnel.sh) and adding in ssh -N -R 0.0.0.0:6001:localhost:22 -i ~/.ssh/cloud_vm garges@34.127.85.102
   -> crontab -e to open the cron tab and */1 * * * * ~/tunnel.sh > tunnel.log 2>&1
 
+(3) Setting up how to talk to the sign 
 
-
-
+(4) Setting up the twilio 
+-Getting a phone number registered (its free between mine and the registered phone number) 12488461690
 
 
 
