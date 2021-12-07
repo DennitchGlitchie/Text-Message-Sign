@@ -77,3 +77,9 @@ https://stackoverflow.com/questions/25608443/how-to-receive-twilio-sms-to-comman
   -> I have confirmed that I can remove the drive and see the files on it and then get it back there 
 -Creating path in the owncloud web GUI: admin > storage (in admin section) > External Storage:local > configuration:/media/usb/
 
+scp -i ~/.ssh/cloud_vm ~/Downloads/thttpd-2.29.tar.gz garges@34.127.85.102:~/thttpd-2.29.tar.gz (logged into macbook)
+https://www.techrepublic.com/article/use-thttpd-as-your-web-server-when-apache-is-overkill/
+scp -i ~/.ssh/cloud_vm garges@34.127.85.102:~/thttpd-2.29.tar.gz (logged into raspberry pi)
+
+sudo apt-get install file
+tar xvf ./thttpd-2.29.tar.gz 
