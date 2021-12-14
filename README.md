@@ -23,6 +23,32 @@
 -Getting a phone number registered (its free between mine and the registered phone number) 12488461690
 
 
+(5) Setting up Web server with cgi-bin 
+-wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
+tar xvf ./thttpd-2.29.tar.gz 
+cd into the directory
+./configure (we talked abour prefix)
+make
+make install (gives an error with group www - doesn't seem to be significant) 
+sudo apt install nvi
+
+mkdir www/index.html 
+
+thttpd -C /etc/thttpd.conf
+-D to run it in the background
+
+Andrew suggests translating port 80 to port 80 like we did with owncloud
+mkdir www/cgi-bin with file gpio
+on private network: http://Rasppi/cgi-bin/gpio will run the script like he said
+don't forget about permissions to run the files 
+
+
+
+
+
+
+
+
 
 
 
@@ -83,3 +109,23 @@ scp -i ~/.ssh/cloud_vm garges@34.127.85.102:~/thttpd-2.29.tar.gz (logged into ra
 
 sudo apt-get install file
 tar xvf ./thttpd-2.29.tar.gz 
+
+
+wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
+tar xvf ./thttpd-2.29.tar.gz 
+cd into the directory
+./configure (we talked abour prefix)
+make
+make install (gives an error with group www - doesn't seem to be significant) 
+sudo apt install nvi
+
+mkdir www/index.html 
+
+thttpd -C /etc/thttpd.conf
+-D to run it in the background
+
+Andrew suggests translating port 80 to port 80 like we did with owncloud
+mkdir www/cgi-bin with file gpio
+on private network: http://Rasppi/cgi-bin/gpio will run the script like he said
+don't forget about permissions to run the files 
+
