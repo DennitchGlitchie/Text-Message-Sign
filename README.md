@@ -1,6 +1,7 @@
 
 
 (2) Setting up Raspberry Pi for SSH
+
 -Setting up automatic wifi by editting the config file https://dietpi.com/phpbb/viewtopic.php?p=9#p9
   -> Open dietpi-wifi.txt and open it with wordpad
   -> Change aWIFI_SSID[0]='MySSID' and aWIFI_KEY[0]='MyWifiKey'
