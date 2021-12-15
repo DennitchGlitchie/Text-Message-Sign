@@ -50,7 +50,7 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
 -Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
 tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
 tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
-
+-Need to start the web server to see that the port 80 is listening
 
 Andrew suggests translating port 80 to port 80 like we did with owncloud
 mkdir www/cgi-bin with file gpio
