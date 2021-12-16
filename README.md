@@ -91,5 +91,12 @@ because on the vm, user "garges" isn't allowed to bind to port 80
 but this would work:
 ssh root@vm -R 80:localhost:80
 
+Using journalctl to see the logs; adding -f will show ongoing logs 
+
+root@DietPi:~/www/cgi-bin# cat /etc/thttpd.conf 
+dir=/root/www
+cgipat=**.sh
+#cgipat=/cgi-bin/*
+
 
 
