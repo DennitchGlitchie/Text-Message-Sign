@@ -57,6 +57,7 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
 - Need to start the web server to see that the port 80 is listening
 - thttpd -C /etc/thttpd.conf
 - http://34.127.85.102:6082/
+- http://34.127.85.102:6082/cgi-bin/myfile.sh
 
 Andrew suggests translating port 80 to port 80 like we did with owncloud
 mkdir www/cgi-bin with file gpio
@@ -73,7 +74,7 @@ https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
 it basically just outputs a header and then writes whatever text you give it as a command line argument out to the sign
 here's an example of the protocol, that explains how to write messages in different colors, etc
 http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
-
+wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
 
 Conversation with Andrew:
 Also, just a clarifying statement regarding the port forwarding/listening: 
