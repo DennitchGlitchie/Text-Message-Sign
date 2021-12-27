@@ -11,7 +11,7 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
   - Open dietpi-wifi.txt and open it with wordpad
   - Change aWIFI_SSID[0]='MySSID' and aWIFI_KEY[0]='MyWifiKey'
   - Don't forget to also enable automatic wifi in another file
-  - Probably should put in the phone's tether wifi(s) for automatic connection
+  - Probably should come back and put in the phone's tether wifi(s) for automatic connection
 - Setting up ssh key for raspberry pi from laptop: ssh -i TextMessageSign root@10.0.0.128
   - using the diet-config command to change ssh to OpenSSH and not Dropbear
   - Use ssh-keygen to generate a key with custom name and adding the .pub file to ~/.ssh/authorized_keys (remember to respond "Yes")
@@ -23,7 +23,7 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
   - Using port 6001 here because there was a conflict with the reverse tunnelling known_hosts with the owncloud_pi 
   - Creating tunnel.sh with correct permissions (chmod 777 tunnel.sh) and adding in ssh -N -R 0.0.0.0:6001:localhost:22 -i ~/.ssh/cloud_vm garges@34.127.85.102
   - crontab -e to open the cron tab and */1 * * * * ~/tunnel.sh > tunnel.log 2>&1
-- Installing Web Server with CGI-bin
+- Installing Web Server for CGI-bin use 
   - wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
   - tar xvf ./thttpd-2.29.tar.gz (unzip package)
   - cd into the directory
@@ -36,6 +36,9 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
   - chmod a+x
   - thttpd -C /etc/thttpd.conf (can add -D to run this in the background)
   - -d specifies the directory to serve files from, -p specifies the port to listen on, -c specifies the URL pattern for CGI scripts that should be executed instead of served directly
+  - Doing systemd to have the webserver start automatically
+  - changing configuration of .sh scripts for the cgi-bin (saw this in a tutorial someplace)
+  - Getting the correct script to extract the text message
 
 
 (2.5) Setting up Public Access with port forwarding and cloud vm 
