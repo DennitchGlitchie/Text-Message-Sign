@@ -58,6 +58,8 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
 - thttpd -C /etc/thttpd.conf
 - http://34.127.85.102:6082/
 - http://34.127.85.102:6082/cgi-bin/myfile.sh
+- https://www.2daygeek.com/linux-create-systemd-service-unit-file/
+- 
 
 Andrew suggests translating port 80 to port 80 like we did with owncloud
 mkdir www/cgi-bin with file gpio
