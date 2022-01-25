@@ -40,6 +40,9 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
   - changing configuration of .sh scripts for the cgi-bin (saw this in a tutorial someplace)
   - Getting the correct script to extract the text message
   - Static site URL: http://34.127.85.102:6082/
+  - Andrew and I worked on getting the images to show up and we needed executible permisions (by other) in the file directory. Also, thttpd has a error when you give the images executibles so they gotta be read (write doesn't matter but it CAN'T be executible). 
+  - drw-r--r-x 2 root root     4096 Dec 18 02:56 .
+  - -rw-r--r-- 1 root root  1090691 Dec 18 02:56 IMG-0171.jpg
 
 
 (2.5) Setting up Public Access with port forwarding and cloud vm 
