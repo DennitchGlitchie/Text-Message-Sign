@@ -39,6 +39,7 @@ This project attempts to utilize a raspberry pi as an SMS access point (through 
   - Doing systemd to have the webserver start automatically
   - changing configuration of .sh scripts for the cgi-bin (saw this in a tutorial someplace)
   - Getting the correct script to extract the text message
+  - Static site URL: http://34.127.85.102:6082/
 
 
 (2.5) Setting up Public Access with port forwarding and cloud vm 
