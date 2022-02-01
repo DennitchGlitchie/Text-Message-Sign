@@ -112,13 +112,13 @@ cgipat=**.sh
 #cgipat=/cgi-bin/*
 
 Andrew 1on1 2022 01 31:
--lsusb to list the device
--wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
--dmesg to see which ttyUSBX was attached
--stty -F /dev/ttyUSB0 to see the current serial settings 
--stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
--cc pl-m2014r-serial.c  to compile to a.out
--using cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port
--2400 4800 9600 19200 38400 57600 115200
--stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
+- lsusb to list the device
+- wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
+- dmesg to see which ttyUSBX was attached
+- stty -F /dev/ttyUSB0 to see the current serial settings 
+- stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
+- cc pl-m2014r-serial.c  to compile to a.out
+- using cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port
+- 2400 4800 9600 19200 38400 57600 115200
+- stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
 
