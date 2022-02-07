@@ -121,4 +121,4 @@ Andrew 1on1 2022 01 31:
 - using cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port
 - 2400 4800 9600 19200 38400 57600 115200
 - stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
-
+- stty -F /dev/ttyUSB0 9600 to set the baud rate
