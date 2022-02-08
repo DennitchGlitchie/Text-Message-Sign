@@ -122,3 +122,11 @@ Andrew 1on1 2022 01 31:
 - 2400 4800 9600 19200 38400 57600 115200
 - stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
 - stty -F /dev/ttyUSB0 9600 to set the baud rate
+
+root@DietPi:~/www# stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr
+root@DietPi:~/www# stty -F /dev/ttyUSB0
+speed 9600 baud; line = 0;
+min = 1; time = 0;
+-icrnl
+-onlcr
+-icanon -echo
