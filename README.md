@@ -130,3 +130,13 @@ min = 1; time = 0;
 -icrnl
 -onlcr
 -icanon -echo
+  
+Post Rave Twilio Texting Service Bringup
+- Reverse tunnel ssh -p 6001 root@localhost
+- had to manually run thttpd -C /etc/thttpd.conf
+- Using netstat -nlpt to verify that it's working
+- Check static site http://34.127.85.102:6082/
+- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6082/cgi-bin/myfile.sh
+- On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number
+- Set "A Message Comes in" Webhook to be http://34.127.85.102:6082/cgi-bin/myfile.sh GET
+
