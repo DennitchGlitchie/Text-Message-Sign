@@ -139,8 +139,8 @@ Post Rave Twilio Texting Service Bringup
 - Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6082/cgi-bin/myfile.sh
 - On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number
 - Set "A Message Comes in" Webhook to be http://34.127.85.102:6082/cgi-bin/myfile.sh GET
-- Open up two terminals: "cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port" and "stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0" while shorting TX and RX. I have verified that the USB -> DB9 is good and the DB9 -> CAT6 is good
-
+- Open up two terminals: "cat /dev/ttyUSB0 | xxd -c 1" to monitor serial port" and "stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0" while shorting TX and RX. I have verified that the USB -> DB9 is good and the DB9 -> CAT6 is good
+- Baud Rates: 2400 4800 9600 19200 38400 57600 115200
 - stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr 115200
 - echo -en "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID00><PA>abc\r\n" > /dev/ttyUSB0
 - echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01><PA>abc\r\n" > /dev/ttyUSB0
