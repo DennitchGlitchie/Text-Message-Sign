@@ -150,3 +150,4 @@ Getting the Sign to work Wednesday March 2nd:
 - stty sane -echo -icanon -icrnl -inlcr -ocrnl -onlcr 9600 < /dev/ttyUSB0
 - echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
+- chmod 777 dev/ttyUSB0
