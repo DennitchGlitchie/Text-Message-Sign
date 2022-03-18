@@ -151,3 +151,10 @@ Getting the Sign to work Wednesday March 2nd:
 - echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
+
+  
+  Andrew 1on1 March 17th:
+  sudovi (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
+  # Allow members of group sudo to execute any command
+%sudo   ALL=(ALL:ALL) ALL
+nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
