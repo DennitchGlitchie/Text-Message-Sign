@@ -158,3 +158,15 @@ Getting the Sign to work Wednesday March 2nd:
   # Allow members of group sudo to execute any command
 %sudo   ALL=(ALL:ALL) ALL
 nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
+
+Andrew 1on1 March 21st: 
+  +[Unit]
++Description=Tiny HTTP Daemon
++
++[Service]
++PIDFile=/run/thttpd.pid
++ExecStart=/usr/sbin/thttpd -D -C /etc/thttpd.conf
++Restart=always
++
++[Install]
++WantedBy=multi-user.target
