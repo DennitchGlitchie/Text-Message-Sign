@@ -152,6 +152,7 @@ Getting the Sign to work Wednesday March 2nd:
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
 
+  https://paste.googleplex.com/6458107220721664
   
   Andrew 1on1 March 17th:
   sudovi (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
@@ -170,5 +171,10 @@ Andrew 1on1 March 21st:
 +
 +[Install]
 +WantedBy=multi-user.target
+  didn't end up using this^^
   
-need the -D on httpt
+need the -D on httpt or not? 
+ 
+  Andrew offered the following: but ultimately "-o ExitOnForwardFailure=yes" worked
+  https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If%20set%20to,binary%20is%20missing
+  ssh -N -R 0.0.0.0:6001:localhost:22 -R 0.0.0.0:6082:localhost:80 -i ~/.ssh/cloud_vm garges@34.127.85.102 -o ExitOnForwardFailure=yes
