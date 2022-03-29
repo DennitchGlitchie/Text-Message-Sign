@@ -180,3 +180,6 @@ need the -D on httpt or not?
   ssh -N -R 0.0.0.0:6001:localhost:22 -R 0.0.0.0:6082:localhost:80 -i ~/.ssh/cloud_vm garges@34.127.85.102 -o ExitOnForwardFailure=yes
   
 https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If%20set%20to,binary%20is%20missing
+
+Session 3/29/22:
+  - Using journalctl to see that the failing message is: DietPi thttpd[443]: bad fd (0) passed to fdwatch_del_fd!
