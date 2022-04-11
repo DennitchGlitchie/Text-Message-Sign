@@ -183,3 +183,7 @@ https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If
 
 Session 3/29/22:
   - Using journalctl to see that the failing message is: DietPi thttpd[443]: bad fd (0) passed to fdwatch_del_fd!
+
+Session 4/11/22:
+  - Setting up Auto SSH systemd 
+  - Setting up thttpd
