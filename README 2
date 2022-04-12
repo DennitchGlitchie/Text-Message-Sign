@@ -8,7 +8,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Power Switch
 - Mounting Brackets with Velcrow
 
-(2) Setting up Raspberry Pi as a Web Server
+(2) Setting up Raspberry Pi for reliable SSH
 - DietPi Image https://dietpi.com/docs/install/
 - Setting up automatic wifi by editting the config file https://dietpi.com/phpbb/viewtopic.php?p=9#p9
   - Open dietpi-wifi.txt and open it with wordpad
@@ -33,6 +33,46 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
     - Created a new service file /etc/systemd/system/autossh.service (LINK THE TEXT IN A FILE)
     - sudo systemctl daemon-reload 
     - sudo systemctl start custom.service
+
+(3) Setting up Twilio Number and Access 
+- Creating number - 12488461690
+- Setting up and configuring webhook
+- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6081/cgi-bin/myfile.sh
+- On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number
+- Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET. (CHANGED THE PORT NUMBER)
+
+(3.5) Automated Text Service
+
+
+(4) Setting up Webserver on Raspberry pi
+- Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
+  - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
+  - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
+  - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
+
+(4.5) Static Site
+- Static site URL: http://34.127.85.102:6082/
+  - Andrew and I worked on getting the images to show up and we needed executible permisions (by other) in the file directory. Also, thttpd has a error when you give the images executibles so they gotta be read (write doesn't matter but it CAN'T be executible). 
+  - drw-r--r-x 2 root root     4096 Dec 18 02:56 .
+  - -rw-r--r-- 1 root root  1090691 Dec 18 02:56 IMG-0171.jpg
+
+(5) Setting up Sign Communication
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 - Setting up thttpd server with cgi-bins script
   - wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
   - tar xvf ./thttpd-2.29.tar.gz (unzip package)
@@ -59,10 +99,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   
     
     
-- Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
-  - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
-  - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
-  - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
+
 
 
 - Installing Web Server for CGI-bin use 
@@ -113,9 +150,6 @@ on private network: http://Rasppi/cgi-bin/gpio will run the script like he said
 don't forget about permissions to run the files 
 
 
-(3) Setting up Twilio as an access point 
-- Creating number - 12488461690
-- Setting up and configuring webhook
 
 (4) Getting code for the sign to work:
 https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
