@@ -136,9 +136,9 @@ Post Rave Twilio Texting Service Bringup
 - had to manually run thttpd -C /etc/thttpd.conf
 - Using netstat -nlpt to verify that it's working
 - Check static site http://34.127.85.102:6082/
-- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6082/cgi-bin/myfile.sh
+- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6081/cgi-bin/myfile.sh
 - On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number
-- Set "A Message Comes in" Webhook to be http://34.127.85.102:6082/cgi-bin/myfile.sh GET
+- Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET. (CHANGED THE PORT NUMBER)
 - Open up two terminals: "cat /dev/ttyUSB0 | xxd -c 1" to monitor serial port" and "stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0" while shorting TX and RX. I have verified that the USB -> DB9 is good and the DB9 -> CAT6 is good
 - Baud Rates: 2400 4800 9600 19200 38400 57600 115200
 - stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr 115200
@@ -187,3 +187,10 @@ Session 3/29/22:
 Session 4/11/22:
   - Setting up Auto SSH systemd 
   - Setting up thttpd
+  - sudo apt-get install autossh
+  - Created a new service file /etc/systemd/system/autossh.service 
+  - sudo systemctl daemon-reload
+  - sudo systemctl start custom.service
+  - Made sure to change the PIDFile settings
+  - changed the ports to 6001 and 6081 finally to match
+  - Readded the custom service to start the sign with a blank slate 
