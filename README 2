@@ -7,7 +7,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Electrical Hookups: (Fuse taps, voltage converters, what else??)
 - Mounting Brackets with Velcrow
 
-(2) Setting up Raspberry Pi for reliable/rebootable SSH
+(2) Setting up Raspberry Pi for reliable/rebootable SSH utilizinge auto SSH and systemd
 - DietPi Image https://dietpi.com/docs/install/
 - Setting up automatic wifi by editting the config file https://dietpi.com/phpbb/viewtopic.php?p=9#p9
   - Open dietpi-wifi.txt and open it with wordpad
@@ -32,6 +32,33 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
     - Created a new service file /etc/systemd/system/autossh.service (LINK THE TEXT IN A FILE)
     - sudo systemctl daemon-reload 
     - sudo systemctl start custom.service
+- /etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified"
+- [TODO] Linking in the auto ssh systemd file
+This means that 6000 on any wildcard IP will be translated to port 22 and 6080 on any wilcard IP will be translated to port 80.
+Port 22 is the default SSH server because that's how we do the reverse tunneling right? Port 80 and 6080 are just ports that we picked that are non default correct?
+port 80 is the default port for http traffic
+port 22 and 80 are the actual ports that the sshd and httpd servers are listening on,
+and those -R forwarding specifications cause your_vm:6000 to tunnel through that SSH connection and end up hitting port 22 on your pi,
+and same thing for 6080 -> 80
+if you wanted to, you could also forward port 80 -> port 80
+with one caveat: in order to listen on port 80, you need to be root
+any port below 1024
+so this wouldn't work:
+ssh garges@vm -R 80:localhost:80
+because on the vm, user "garges" isn't allowed to bind to port 80
+but this would work:
+ssh root@vm -R 80:localhost:80
+Session 4/11/22:
+  - Setting up Auto SSH systemd 
+  - Setting up thttpd
+  - sudo apt-get install autossh
+  - Created a new service file /etc/systemd/system/autossh.service 
+  - sudo systemctl daemon-reload
+  - sudo systemctl start custom.service
+  - Made sure to change the PIDFile settings
+  - changed the ports to 6001 and 6081 finally to match
+  - Readded the custom service to start the sign with a blank slate 
+Using journalctl to see the logs; adding -f will show ongoing logs 
 
 (3) Setting up Twilio Number and Access 
 - Creating number - (12488461690)
@@ -45,7 +72,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Really I just manually sent responses to the incoming messages
 - I will have to document how I do this in the future
 
-(4) Setting up Webserver on Raspberry pi: thttpd with cgi-bins scripting
+(4) Setting up Webserver on Raspberry pi: thttpd with automatic Start and cgi-bins scripting
 - Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
   - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
   - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
@@ -69,19 +96,15 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Andrew and I worked on getting the images to show up and we needed executible permisions (by other) in the file directory. Also, thttpd has a error when you give the images executibles so they gotta be read (write doesn't matter but it CAN'T be executible). 
 - drw-r--r-x 2 root root     4096 Dec 18 02:56 .
 - -rw-r--r-- 1 root root  1090691 Dec 18 02:56 IMG-0171.jpg
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Utilizing systemd to get the web server to start
+- [TODO] include the systemd file for the starting of the web server
+- https://www.2daygeek.com/linux-create-systemd-service-unit-file/
+- thttpd -C /etc/thttpd.conf
+- http://34.127.85.102:6082/cgi-bin/myfile.sh
+root@DietPi:~/www/cgi-bin# cat /etc/thttpd.conf 
+dir=/root/www
+cgipat=**.sh
+#cgipat=/cgi-bin/*
 
 (4.5) Static Site
 - Static site URL: http://34.127.85.102:6082/
@@ -102,98 +125,42 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - 2400 4800 9600 19200 38400 57600 115200
 - stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
 - stty -F /dev/ttyUSB0 9600 to set the baud rate
-
-(6) Mounting of sign into car
-- Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
-- Emergeny Jump Start:
-- 5V Converter
-- 9V Converter
-
-
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-  
-  
-  
-  
-    
-    
-
-
-
-
-
-(2.5) Setting up Public Access with port forwarding and cloud vm 
-- configure the "trusted_domains" setting in config/config.php: sudo nano /var/www/owncloud/config/config.php
-  - 4 => '34.127.85.102', 
-- Creating automated script so that the reverse tunnel and port translation are automatically done
-  - creating tunnel.sh script from tutorial with correct permissions
-  - ssh -N -R 0.0.0.0:6001:localhost:22 -R 0.0.0.0:6081:localhost:80 -i ~/.ssh/cloud_vm garges@34.127.85.102
-  - /etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified"
-  - crontab -e to open the cron tab
-  - */1 * * * * ~/tunnel.sh > tunnel.log 2>&1
-- Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
-  - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
-  - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
-  - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
-- Need to start the web server to see that the port 80 is listening
-- thttpd -C /etc/thttpd.conf
-- http://34.127.85.102:6082/
-- http://34.127.85.102:6082/cgi-bin/myfile.sh
-- https://www.2daygeek.com/linux-create-systemd-service-unit-file/
-- 
-
-
-
-(4) Getting code for the sign to work:
 https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
 it basically just outputs a header and then writes whatever text you give it as a command line argument out to the sign
 here's an example of the protocol, that explains how to write messages in different colors, etc
 http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
 wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
 
-Conversation with Andrew:
-Also, just a clarifying statement regarding the port forwarding/listening: 
+(6) Mounting of sign into car
+- Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
+- Emergeny Jump Start:
+- 5V Converter
+- 9V Converter
+- inline toggle switch
 
-On my owncloud pi, I am running the following in crontab 
-ssh -N -R 0.0.0.0:6000:localhost:22 -R 0.0.0.0:6080:localhost:80 -i ~/.ssh/cloud_vm garges@34.127.85.102
-This means that 6000 on any wildcard IP will be translated to port 22 and 6080 on any wilcard IP will be translated to port 80.
-Port 22 is the default SSH server because that's how we do the reverse tunneling right? Port 80 and 6080 are just ports that we picked that are non default correct?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Andrew Fuller, Yesterday 6:00 PM
-port 80 is the default port for http traffic
-port 22 and 80 are the actual ports that the sshd and httpd servers are listening on,
-and those -R forwarding specifications cause your_vm:6000 to tunnel through that SSH connection and end up hitting port 22 on your pi,
-and same thing for 6080 -> 80
-if you wanted to, you could also forward port 80 -> port 80
-with one caveat: in order to listen on port 80, you need to be root
-any port below 1024
-so this wouldn't work:
-ssh garges@vm -R 80:localhost:80
-because on the vm, user "garges" isn't allowed to bind to port 80
-but this would work:
-ssh root@vm -R 80:localhost:80
 
-Using journalctl to see the logs; adding -f will show ongoing logs 
 
-root@DietPi:~/www/cgi-bin# cat /etc/thttpd.conf 
-dir=/root/www
-cgipat=**.sh
-#cgipat=/cgi-bin/*
+  
+  
+  
+  
+    
+    
+
+
+
+
+
+
+
+
+
 
 Andrew 1on1 2022 01 31:
 
@@ -259,13 +226,4 @@ https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If
 Session 3/29/22:
   - Using journalctl to see that the failing message is: DietPi thttpd[443]: bad fd (0) passed to fdwatch_del_fd!
 
-Session 4/11/22:
-  - Setting up Auto SSH systemd 
-  - Setting up thttpd
-  - sudo apt-get install autossh
-  - Created a new service file /etc/systemd/system/autossh.service 
-  - sudo systemctl daemon-reload
-  - sudo systemctl start custom.service
-  - Made sure to change the PIDFile settings
-  - changed the ports to 6001 and 6081 finally to match
-  - Readded the custom service to start the sign with a blank slate 
+
