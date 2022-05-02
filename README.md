@@ -75,6 +75,9 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
 - Edditing the /etc/thttpd.conf file to indicate cgi-bin nomenclature: see thttpd.conf file
 - thttpd -C /etc/thttpd.conf
+- See ~/www/cgi-bins/myfile.sh
+- See ~/write2sign.sh
+- See ~/www/index.html and ~/www/index.css
 
 
 (4.5) Static Site
