@@ -65,7 +65,12 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - thttpd -C /etc/thttpd.conf (can add -D to run this in the background)
   - -d specifies the directory to serve files from, -p specifies the port to listen on, -c specifies the URL pattern for CGI scripts that should be executed instead of served directly
 - Using systemd to automatically start the webserver
-  - Created a new service file /etc/systemd/system/ (see autossh.service)
+  - Created a new service file /etc/systemd/system/thttpd.service (see thttpdh.service)
+
+
+
+
+
 
 
 
