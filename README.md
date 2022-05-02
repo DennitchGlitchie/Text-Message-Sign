@@ -28,50 +28,26 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - Using port 6001 here because there was a conflict with the reverse tunnelling known_hosts with the owncloud_pi which uses 6000. 
   - The next project will likely use 6002 
   - In the past I have used crontab -e to run a tunnel script (crontab -e to open the cron tab and */1 * * * * ~/tunnel.sh > tunnel.log 2>&1) which is not a good solution
-  - NOT MANIFESTED NOTE:  (/etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified")
   - Best way to do it is to set up an autossh systemd service
-    - Created a new service file /etc/systemd/system/autossh.service (LINK THE TEXT IN A FILE)
+    - sudo apt-get install autossh
+    - Created a new service file /etc/systemd/system/autossh.service (see autossh.service)
     - sudo systemctl daemon-reload 
     - sudo systemctl start custom.service
-- /etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified"
-- [TODO] Linking in the auto ssh systemd file
-This means that 6000 on any wildcard IP will be translated to port 22 and 6080 on any wilcard IP will be translated to port 80.
-Port 22 is the default SSH server because that's how we do the reverse tunneling right? Port 80 and 6080 are just ports that we picked that are non default correct?
-port 80 is the default port for http traffic
-port 22 and 80 are the actual ports that the sshd and httpd servers are listening on,
-and those -R forwarding specifications cause your_vm:6000 to tunnel through that SSH connection and end up hitting port 22 on your pi,
-and same thing for 6080 -> 80
-if you wanted to, you could also forward port 80 -> port 80
-with one caveat: in order to listen on port 80, you need to be root
-any port below 1024
-so this wouldn't work:
-ssh garges@vm -R 80:localhost:80
-because on the vm, user "garges" isn't allowed to bind to port 80
-but this would work:
-ssh root@vm -R 80:localhost:80
-Session 4/11/22:
-  - Setting up Auto SSH systemd 
-  - Setting up thttpd
-  - sudo apt-get install autossh
-  - Created a new service file /etc/systemd/system/autossh.service 
-  - sudo systemctl daemon-reload
-  - sudo systemctl start custom.service
-  - Made sure to change the PIDFile settings
-  - changed the ports to 6001 and 6081 finally to match
-  - Readded the custom service to start the sign with a blank slate 
-Using journalctl to see the logs; adding -f will show ongoing logs 
-https://paste.googleplex.com/6458107220721664
+    - journalctl will give the logs
+- /etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified" (keeping this note here even though this file is not changed)
+- Remember: Port 22 is the default SSH server, port 80 is the default http traffice server. 6001 on any wildcard IP will be translated to port 22 and 6081 on any wilcard IP will be translated to port 80. You need to be root on any port below 1024. ssh garges@vm -R 80:localhost:80 (would NOT work) while ssh root@vm -R 80:localhost:80 (would work) 
+- SSH into cloud vm from laptop: ssh -i ~/.ssh/cloud_vm garges@34.127.85.102
+- SSH into raspberry pi from cloud vm: ssh -p 6001 root@localhost
 
 (3) Setting up Twilio Number and Access 
 - Creating number - (12488461690)
-- Setting up and configuring webhook
-- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6081/cgi-bin/myfile.sh
 - On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number to put the following:
 - Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET. (CHANGED THE PORT NUMBER)
 
 (3.5) Automated Text Service
 - I attempted to use this phone number to send "automated" responses
 - Really I just manually sent responses to the incoming messages
+- I'm not sure if this conflicts with the incoming webhook
 - I will have to document how I do this in the future
 
 (4) Setting up Webserver on Raspberry pi: thttpd with automatic Start and cgi-bins scripting
