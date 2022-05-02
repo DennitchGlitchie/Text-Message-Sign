@@ -102,30 +102,16 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
     %sudo   ALL=(ALL:ALL) ALL
     nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
 - Ultimately, the way to write to the sign is: 
+  - stty sane -echo -icanon -icrnl -inlcr -ocrnl -onlcr 9600 -F /dev/ttyUSB0
+  - echo -ne "\r\n" > /dev/ttyUSB0
+  - sleep 1
+  - echo -ne "<ID00><PA>$MYMESSAGE   \r\n" > /dev/ttyUSB0
+- Created a new service file /etc/systemd/system/custom.service (see custom.service) to wipe the sign on startup
+
+  
+  
 
 
-
-
-Post Rave Twilio Texting Service Bringup
-- Reverse tunnel ssh -p 6001 root@localhost
-- had to manually run thttpd -C /etc/thttpd.conf
-- Using netstat -nlpt to verify that it's working
-- Check static site http://34.127.85.102:6082/
-- Checking that manual webhook shows up in /var/tmp/log.log http://34.127.85.102:6081/cgi-bin/myfile.sh
-- On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number
-- Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET. (CHANGED THE PORT NUMBER)
-- Open up two terminals: "cat /dev/ttyUSB0 | xxd -c 1" to monitor serial port" and "stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0" while shorting TX and RX. I have verified that the USB -> DB9 is good and the DB9 -> CAT6 is good
-- Baud Rates: 2400 4800 9600 19200 38400 57600 115200
-- stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr 115200
-- echo -en "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID00><PA>abc\r\n" > /dev/ttyUSB0
-- echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01><PA>abc\r\n" > /dev/ttyUSB0
-Getting the Sign to work Wednesday March 2nd: 
-- stty sane -echo -icanon -icrnl -inlcr -ocrnl -onlcr 9600 < /dev/ttyUSB0
-- echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
-- echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
-- chmod 777 dev/ttyUSB0
-  Andrew 1on1 March 17th:
-- SEE CUSTOM SIGN WIPE THAT I CREATED ON STARTUP 
   
 (5.5) Debugging Tips for Sign Communication
 - lsusb to list the device
@@ -149,6 +135,16 @@ min = 1; time = 0;
 -icrnl
 -onlcr
 -icanon -echo
+- Open up two terminals: "cat /dev/ttyUSB0 | xxd -c 1" to monitor serial port" and "stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0" while shorting TX and RX. I have verified that the USB -> DB9 is good and the DB9 -> CAT6 is good
+- Baud Rates: 2400 4800 9600 19200 38400 57600 115200
+- stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr 115200
+- echo -en "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID00><PA>abc\r\n" > /dev/ttyUSB0
+- echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01><PA>abc\r\n" > /dev/ttyUSB0
+Getting the Sign to work Wednesday March 2nd: 
+- stty sane -echo -icanon -icrnl -inlcr -ocrnl -onlcr 9600 < /dev/ttyUSB0
+- echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
+- echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
+- chmod 777 dev/ttyUSB0
   
 
 (6) Mounting of sign into car
