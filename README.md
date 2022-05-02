@@ -65,38 +65,17 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - thttpd -C /etc/thttpd.conf (can add -D to run this in the background)
   - -d specifies the directory to serve files from, -p specifies the port to listen on, -c specifies the URL pattern for CGI scripts that should be executed instead of served directly
 - Using systemd to automatically start the webserver
-  - Created a new service file /etc/systemd/system/thttpd.service (see thttpdh.service)
-
-
-
-
-
-
-
-
-
-
+  - Created a new service file /etc/systemd/system/thttpd.service (see thttpd.service)
+  - sudo systemctl daemon-reload 
+  - sudo systemctl start thttpd.service
+  - journalctl will give the logs
 - Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
   - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
   - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
   - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
-
-- Doing systemd to have the webserver start automatically
-- changing configuration of .sh scripts for the cgi-bin (saw this in a tutorial someplace)
-- Getting the correct script to extract the text message
-- Static site URL: http://34.127.85.102:6081/
-- Andrew and I worked on getting the images to show up and we needed executible permisions (by other) in the file directory. Also, thttpd has a error when you give the images executibles so they gotta be read (write doesn't matter but it CAN'T be executible). 
-- drw-r--r-x 2 root root     4096 Dec 18 02:56 .
-- -rw-r--r-- 1 root root  1090691 Dec 18 02:56 IMG-0171.jpg
-- Utilizing systemd to get the web server to start
-- [TODO] include the systemd file for the starting of the web server
-- https://www.2daygeek.com/linux-create-systemd-service-unit-file/
+- Edditing the /etc/thttpd.conf file to indicate cgi-bin nomenclature: see thttpd.conf file
 - thttpd -C /etc/thttpd.conf
-- http://34.127.85.102:6082/cgi-bin/myfile.sh
-root@DietPi:~/www/cgi-bin# cat /etc/thttpd.conf 
-dir=/root/www
-cgipat=**.sh
-#cgipat=/cgi-bin/*
+
 
 (4.5) Static Site
 - Static site URL: http://34.127.85.102:6082/
