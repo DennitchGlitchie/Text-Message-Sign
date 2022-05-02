@@ -84,19 +84,18 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
     %sudo   ALL=(ALL:ALL) ALL
     nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
 
-
-
 (4.5) Static Site
-- Static site URL: http://34.127.85.102:6082/
-  - Andrew and I worked on getting the images to show up and we needed executible permisions (by other) in the file directory. Also, thttpd has a error when you give the images executibles so they gotta be read (write doesn't matter but it CAN'T be executible). 
+- Static site URL: http://34.127.85.102:6081/
+- Images need the right kind of permissions. thttpd will give an error when they are executible so the images have to be read (write irrelevant) and NOT executible
   - drw-r--r-x 2 root root     4096 Dec 18 02:56 .
   - -rw-r--r-- 1 root root  1090691 Dec 18 02:56 IMG-0171.jpg
-- [TODO] Getting the static site stuff into github
+- See ~/www/cgi-bins/myfile.sh
+- See ~/www/index.html and ~/www/index.css
 
-(5) Setting up Sign Communication and webhook (5.5) Debugging Tips for Sign Communication
+(5) Setting up Sign Communication and webhook 
 - http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
 - lsusb to list the device
-- wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
+- wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c (I didn't end up using this)
 - dmesg to see which ttyUSBX was attached
 - stty -F /dev/ttyUSB0 to see the current serial settings 
 - stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
@@ -136,6 +135,9 @@ Getting the Sign to work Wednesday March 2nd:
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
   Andrew 1on1 March 17th:
+- SEE CUSTOM SIGN WIPE THAT I CREATED ON STARTUP 
+  
+(5.5) Debugging Tips for Sign Communication
   
 
 (6) Mounting of sign into car
