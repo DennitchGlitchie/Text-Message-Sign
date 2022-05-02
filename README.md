@@ -95,27 +95,17 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 (5) Setting up Sign Communication and webhook 
 - http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
 - wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c (I didn't end up using this but saved it in my files)
-- lsusb to list the device
-- dmesg to see which ttyUSBX was attached
-- stty -F /dev/ttyUSB0 to see the current serial settings 
-- stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
-- cc pl-m2014r-serial.c  to compile to a.out
-- using cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port
-- 2400 4800 9600 19200 38400 57600 115200
-- stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
-- stty -F /dev/ttyUSB0 9600 to set the baud rate
-https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
-it basically just outputs a header and then writes whatever text you give it as a command line argument out to the sign
-here's an example of the protocol, that explains how to write messages in different colors, etc
-http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
-wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
-root@DietPi:~/www# stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr
-root@DietPi:~/www# stty -F /dev/ttyUSB0
-speed 9600 baud; line = 0;
-min = 1; time = 0;
--icrnl
--onlcr
--icanon -echo
+- See ~/write2sign.sh
+  - This needs to have some sudo permissions change since this will be run by user "nobody". Need to allow sudo access to JUST this file.
+  - sudo visudo (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
+    # Allow members of group sudo to execute any command
+    %sudo   ALL=(ALL:ALL) ALL
+    nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
+- Ultimately, the way to write to the sign is: 
+
+
+
+
 Post Rave Twilio Texting Service Bringup
 - Reverse tunnel ssh -p 6001 root@localhost
 - had to manually run thttpd -C /etc/thttpd.conf
@@ -138,6 +128,27 @@ Getting the Sign to work Wednesday March 2nd:
 - SEE CUSTOM SIGN WIPE THAT I CREATED ON STARTUP 
   
 (5.5) Debugging Tips for Sign Communication
+- lsusb to list the device
+- dmesg to see which ttyUSBX was attached
+- stty -F /dev/ttyUSB0 to see the current serial settings 
+- stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
+- cc pl-m2014r-serial.c  to compile to a.out
+- using cat /dev/ttyUSB0 | xxd -c 1 to monitor serial port
+- Baud ratest that we tried: 2400 4800 9600 19200 38400 57600 115200
+- stty -F /dev/ttyUSB0 9600; sleep 1; echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01>abc\r\n" > /dev/ttyUSB0
+- stty -F /dev/ttyUSB0 9600 to set the baud rate
+https://github.com/qartis/misc/blob/master/pl-m2014r-serial.c
+it basically just outputs a header and then writes whatever text you give it as a command line argument out to the sign
+here's an example of the protocol, that explains how to write messages in different colors, etc
+http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
+wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
+root@DietPi:~/www# stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr
+root@DietPi:~/www# stty -F /dev/ttyUSB0
+speed 9600 baud; line = 0;
+min = 1; time = 0;
+-icrnl
+-onlcr
+-icanon -echo
   
 
 (6) Mounting of sign into car
