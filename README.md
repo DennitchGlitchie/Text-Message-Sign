@@ -107,11 +107,6 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - sleep 1
   - echo -ne "<ID00><PA>$MYMESSAGE   \r\n" > /dev/ttyUSB0
 - Created a new service file /etc/systemd/system/custom.service (see custom.service) to wipe the sign on startup
-
-  
-  
-
-
   
 (5.5) Debugging Tips for Sign Communication
 - lsusb to list the device
@@ -145,7 +140,6 @@ Getting the Sign to work Wednesday March 2nd:
 - echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
-  
 
 (6) Mounting of sign into car
 - Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
