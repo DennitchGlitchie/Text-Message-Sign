@@ -1,0 +1,12 @@
+[Unit]
+Description=example systemd custom service unit file
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/tmp/thttpd.pid
+ExecStart=/usr/local/sbin/thttpd -D -C /etc/thttpd.conf
+
+[Install]
+WantedBy=multi-user.target
+root@DietPi:/etc/systemd/system# 
