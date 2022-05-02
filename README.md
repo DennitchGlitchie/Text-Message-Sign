@@ -6,6 +6,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Pro-Lite PL-M2014R LED Matrix Sign
 - Electrical Hookups: (Fuse taps, voltage converters, what else??)
 - Mounting Brackets with Velcrow
+- Switch: https://www.jimellisvwparts.com/products/Switch/11484389/1K0927122AREH.html
 
 (2) Setting up Raspberry Pi for reliable/rebootable SSH utilizinge auto SSH and systemd
 - DietPi Image https://dietpi.com/docs/install/
