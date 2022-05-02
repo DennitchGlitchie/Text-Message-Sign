@@ -1,3 +1,5 @@
+THIS SHOULD BE THE MASTER READ ME FILE
+
 This project utilizes a raspberry pi as an SMS access point (with Twilio) to control text on an LED matrix sign
 
 (1) Gathering Hardware:
