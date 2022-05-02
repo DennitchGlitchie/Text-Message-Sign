@@ -1,5 +1,3 @@
-THIS SHOULD BE THE MASTER READ ME FILE
-
 This project utilizes a raspberry pi as an SMS access point (with Twilio) to control text on an LED matrix sign
 
 (1) Gathering Hardware:
@@ -20,16 +18,17 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
   - identifying the IP Address of the raspberry pi on the home network with hostname -I
   - Use ssh-keygen to generate a key with custom name (TextMessageSign) and adding the .pub file to ~/.ssh/authorized_keys (remember to respond "yes")
   - Getting the public key to the raspberry pi with a flashdrive (mkdir /media/usb; sudo mount -o umask=0,uid=111,gid=33 /dev/sdc1 /media/usb; lsblk)
-  - ssh -i TextMessageSign root@10.0.0.128
+  - ssh -i TextMessageSign root@10.0.0.128 
 - Setting up ssh key for cloud_vm from raspberry pi: 
   - This assumes I already have a cloud_vm set up. See my Owncloud project for details on how to set up cloud_vm
   - Use ssh-keygen on raspberry pi to generate a key with custom name and adding .pub file to ~/.ssh/authorized_keys (remember to respond "yes")
   - ssh -i ~/.ssh/cloud_vm garges@34.127.85.102
 - Setting up reverse tunnelling between cloud vm and raspberry pi
   - Veryifying the reverse tunnel ssh -N -R 0.0.0.0:6001:localhost:22 -i ~/.ssh/Cloud_vm garges@34.127.85.102 and follow with ssh -p 6001 root@localhost
-  - Using port 6001 here because there was a conflict with the reverse tunnelling known_hosts with the owncloud_pi which uses 6000 
+  - Using port 6001 here because there was a conflict with the reverse tunnelling known_hosts with the owncloud_pi which uses 6000. 
+  - The next project will likely use 6002 
   - In the past I have used crontab -e to run a tunnel script (crontab -e to open the cron tab and */1 * * * * ~/tunnel.sh > tunnel.log 2>&1) which is not a good solution
-  - Including note that is NOT manifested (/etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified")
+  - NOT MANIFESTED NOTE:  (/etc/ssh/sshd_config "gateway ports" this is the file that was changed on the cloud vm "GatewayPorts clientspecified")
   - Best way to do it is to set up an autossh systemd service
     - Created a new service file /etc/systemd/system/autossh.service (LINK THE TEXT IN A FILE)
     - sudo systemctl daemon-reload 
