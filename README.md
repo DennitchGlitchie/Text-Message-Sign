@@ -76,8 +76,14 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - Edditing the /etc/thttpd.conf file to indicate cgi-bin nomenclature: see thttpd.conf file
 - thttpd -C /etc/thttpd.conf
 - See ~/www/cgi-bins/myfile.sh
-- See ~/write2sign.sh
 - See ~/www/index.html and ~/www/index.css
+- See ~/write2sign.sh
+  - This needs to have some sudo permissions change since this will be run by user "nobody". Need to allow sudo access to JUST this file.
+  - sudo visudo (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
+    # Allow members of group sudo to execute any command
+    %sudo   ALL=(ALL:ALL) ALL
+    nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
+
 
 
 (4.5) Static Site
@@ -130,10 +136,7 @@ Getting the Sign to work Wednesday March 2nd:
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
   Andrew 1on1 March 17th:
-  sudovi (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
-  # Allow members of group sudo to execute any command
-%sudo   ALL=(ALL:ALL) ALL
-nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
+  
 
 (6) Mounting of sign into car
 - Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
