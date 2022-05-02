@@ -42,7 +42,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 (3) Setting up Twilio Number and Access 
 - Creating number - (12488461690)
 - On Twilio Develop -> Phone Numbers -> Manage -> Active Numbers to edit phone number to put the following:
-- Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET. (CHANGED THE PORT NUMBER)
+- Set "A Message Comes in" Webhook to be http://34.127.85.102:6081/cgi-bin/myfile.sh GET
 
 (3.5) Automated Text Service
 - I attempted to use this phone number to send "automated" responses
@@ -50,23 +50,32 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - I'm not sure if this conflicts with the incoming webhook
 - I will have to document how I do this in the future
 
-(4) Setting up Webserver on Raspberry pi: thttpd with automatic Start and cgi-bins scripting
+(4) Setting up automatic Webserver on Raspberry pi: 
+- Downloading thttpd (tiny http daemon)
+  - wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
+  - tar xvf ./thttpd-2.29.tar.gz (unzip package)
+  - cd into the directory
+  - ./configure (can add a prefix for the directories)
+  - make; make install (gives an error with group www - doesn't seem to be significant)
+  - sudo apt install nvi
+  - mkdir www/index.html (this is the static site)
+  - mkdir www/cgi-bin
+  - sudo nano myfile.sh; #!/bin/sh; echo "Your query string was: $QUERY_STRING"
+  - chmod a+x
+  - thttpd -C /etc/thttpd.conf (can add -D to run this in the background)
+  - -d specifies the directory to serve files from, -p specifies the port to listen on, -c specifies the URL pattern for CGI scripts that should be executed instead of served directly
+- Using systemd to automatically start the webserver
+  - Created a new service file /etc/systemd/system/ (see autossh.service)
+
+
+
+
+
 - Using netstat -nlpt to confirm that we have the right accessability with the ports (I am unsure to what command I used for this):
   - tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      792/lighttpd        
   - tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      636/sshd: /usr/sbin 
   - tcp6       0      0 :::80                   :::*                    LISTEN      1569/thttpd 
-- wget https://acme.com/software/thttpd/thttpd-2.29.tar.gz
-- tar xvf ./thttpd-2.29.tar.gz (unzip package)
-- cd into the directory
-- ./configure (can add a prefix for the directories)
-- make; make install (gives an error with group www - doesn't seem to be significant)
-- sudo apt install nvi
-- mkdir www/index.html (this is the static site)
-- mkdir www/cgi-bin
-- sudo nano myfile.sh; #!/bin/sh; echo "Your query string was: $QUERY_STRING"
-- chmod a+x
-- thttpd -C /etc/thttpd.conf (can add -D to run this in the background)
-- -d specifies the directory to serve files from, -p specifies the port to listen on, -c specifies the URL pattern for CGI scripts that should be executed instead of served directly
+
 - Doing systemd to have the webserver start automatically
 - changing configuration of .sh scripts for the cgi-bin (saw this in a tutorial someplace)
 - Getting the correct script to extract the text message
