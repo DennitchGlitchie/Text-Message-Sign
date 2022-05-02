@@ -80,7 +80,7 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 - See ~/write2sign.sh
   - This needs to have some sudo permissions change since this will be run by user "nobody". Need to allow sudo access to JUST this file.
   - sudo visudo (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
-    # Allow members of group sudo to execute any command
+    "#### Allow members of group sudo to execute any command
     %sudo   ALL=(ALL:ALL) ALL
     nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
 
