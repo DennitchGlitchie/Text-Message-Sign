@@ -59,6 +59,7 @@ Session 4/11/22:
   - changed the ports to 6001 and 6081 finally to match
   - Readded the custom service to start the sign with a blank slate 
 Using journalctl to see the logs; adding -f will show ongoing logs 
+https://paste.googleplex.com/6458107220721664
 
 (3) Setting up Twilio Number and Access 
 - Creating number - (12488461690)
@@ -130,41 +131,6 @@ it basically just outputs a header and then writes whatever text you give it as 
 here's an example of the protocol, that explains how to write messages in different colors, etc
 http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
 wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c
-
-(6) Mounting of sign into car
-- Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
-- Emergeny Jump Start:
-- 5V Converter
-- 9V Converter
-- inline toggle switch
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-  
-  
-  
-  
-    
-    
-
-
-
-
-
-
-
-
-
-
-Andrew 1on1 2022 01 31:
-
-
 root@DietPi:~/www# stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr
 root@DietPi:~/www# stty -F /dev/ttyUSB0
 speed 9600 baud; line = 0;
@@ -172,7 +138,6 @@ min = 1; time = 0;
 -icrnl
 -onlcr
 -icanon -echo
-  
 Post Rave Twilio Texting Service Bringup
 - Reverse tunnel ssh -p 6001 root@localhost
 - had to manually run thttpd -C /etc/thttpd.conf
@@ -186,44 +151,26 @@ Post Rave Twilio Texting Service Bringup
 - stty -F /dev/ttyUSB0 sane  -echo -icanon -icrnl -inlcr -ocrnl -onlcr 115200
 - echo -en "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID00><PA>abc\r\n" > /dev/ttyUSB0
 - echo -en "<ID01>\r\n" > /dev/ttyUSB0; sleep 1; echo -en "<ID01><PA>abc\r\n" > /dev/ttyUSB0
-
-  
 Getting the Sign to work Wednesday March 2nd: 
 - stty sane -echo -icanon -icrnl -inlcr -ocrnl -onlcr 9600 < /dev/ttyUSB0
 - echo -ne "<ID00>\r\n" > /dev/ttyUSB0; sleep 1; echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - echo -ne "<ID00><PA>xxxxxxxxxx\r\n" > /dev/ttyUSB0
 - chmod 777 dev/ttyUSB0
-
-  https://paste.googleplex.com/6458107220721664
-  
   Andrew 1on1 March 17th:
   sudovi (to change the sudoers file in a safe way) with the goal to specifically allow `nobody` run write2sign.sh with no password
   # Allow members of group sudo to execute any command
 %sudo   ALL=(ALL:ALL) ALL
 nobody ALL=(ALL) NOPASSWD: /root/write2sign.sh
 
-Andrew 1on1 March 21st: 
-  +[Unit]
-+Description=Tiny HTTP Daemon
-+
-+[Service]
-+PIDFile=/run/thttpd.pid
-+ExecStart=/usr/sbin/thttpd -D -C /etc/thttpd.conf
-+Restart=always
-+
-+[Install]
-+WantedBy=multi-user.target
-  didn't end up using this^^
-  
-need the -D on httpt or not? 
- 
-  Andrew offered the following: but ultimately "-o ExitOnForwardFailure=yes" worked
-  https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If%20set%20to,binary%20is%20missing
-  ssh -N -R 0.0.0.0:6001:localhost:22 -R 0.0.0.0:6082:localhost:80 -i ~/.ssh/cloud_vm garges@34.127.85.102 -o ExitOnForwardFailure=yes
-  
-https://www.freedesktop.org/software/systemd/man/systemd.service.html#:~:text=If%20set%20to,binary%20is%20missing
+(6) Mounting of sign into car
+- Fuse Tap: https://www.amazon.com/dp/B0827L4HH9?psc=1&ref=ppx_yo2ov_dt_b_product_details
+- Emergeny Jump Start:
+- 5V Converter
+- 9V Converter
+- inline toggle switch
 
-Session 3/29/22:
-  - Using journalctl to see that the failing message is: DietPi thttpd[443]: bad fd (0) passed to fdwatch_del_fd!
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
