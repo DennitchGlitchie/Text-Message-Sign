@@ -94,8 +94,8 @@ This project utilizes a raspberry pi as an SMS access point (with Twilio) to con
 
 (5) Setting up Sign Communication and webhook 
 - http://wearcam.org/ece385/prolite_documentation/ProliteProtocol.html
+- wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c (I didn't end up using this but saved it in my files)
 - lsusb to list the device
-- wget https://raw.githubusercontent.com/qartis/misc/master/pl-m2014r-serial.c (I didn't end up using this)
 - dmesg to see which ttyUSBX was attached
 - stty -F /dev/ttyUSB0 to see the current serial settings 
 - stty -F /dev/ttyUSB0 -icanon for exampel to turn things explicitly off. 
