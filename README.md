@@ -152,3 +152,11 @@ Getting the Sign to work Wednesday March 2nd:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Rough Notes:
+   swapon -s
+  492  vim /etc/fstab
+  493  swapoff
+  494  swapoff /var/swap
+  495  swapoff -a
+  496  swapon -s
+  
+  comment out the swap file #/var/swap none swap sw
