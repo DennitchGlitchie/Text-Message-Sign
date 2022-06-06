@@ -160,3 +160,7 @@ Rough Notes:
   496  swapon -s
   
   comment out the swap file #/var/swap none swap sw
+  
+  http://blog.qartis.com/lazy_hardened_void_linux_raspberry_pi/
+  https://medium.com/swlh/make-your-raspberry-pi-file-system-read-only-raspbian-buster-c558694de79
+  https://github.com/MichaIng/DietPi/issues/2127
