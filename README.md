@@ -164,3 +164,13 @@ Rough Notes:
   http://blog.qartis.com/lazy_hardened_void_linux_raspberry_pi/
   https://medium.com/swlh/make-your-raspberry-pi-file-system-read-only-raspbian-buster-c558694de79
   https://github.com/MichaIng/DietPi/issues/2127
+  
+  
+  Notes on Read only with Andrew:
+  - went into /etc/fstab and changed the booting instruction from rw -> ro (booting instructions for subsequent boots)
+  - We sorta got lucky that everything can start in ro
+  - mount -v -o ro,remount / AND mount -v -o rw,remount / (to edit things)
+  - Set the boot partician to ro 
+  - One challenge was anything that is open in rw mode will prvent this mount command from working 
+  - Important to go rw in both / and /boot file systems when making changes
+  
