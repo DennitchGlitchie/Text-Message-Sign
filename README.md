@@ -174,3 +174,8 @@ Rough Notes:
   - One challenge was anything that is open in rw mode will prvent this mount command from working 
   - Important to go rw in both / and /boot file systems when making changes
   
+  Notes 10/3/22:
+  - mount -v -o rw,remount /
+  - mount -v -o ro,remount /
+  - Moved Images to home directory 
+  - Andrew suggests creating a symbolic link 
