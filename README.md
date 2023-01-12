@@ -179,3 +179,6 @@ Rough Notes:
   - mount -v -o ro,remount /
   - Moved Images to home directory 
   - Andrew suggests creating a symbolic link 
+  
+  Notes 1/12/23:
+  - ln -s /tmp /var/tmp to create a symbolic link, had to delet /var/tmp before
