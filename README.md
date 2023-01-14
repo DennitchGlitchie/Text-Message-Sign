@@ -182,3 +182,7 @@ Rough Notes:
   
   Notes 1/12/23:
   - ln -s /tmp /var/tmp to create a symbolic link, had to delet /var/tmp before
+
+  Notes 1/13/23:
+  - Don't forget system d custom.service and all the other services that I created thttpd, autossh.service
+  - Used python to control the GPIO 17 and add it to the welcome script
