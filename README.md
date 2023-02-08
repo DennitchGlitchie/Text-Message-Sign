@@ -195,3 +195,5 @@ Rough Notes:
   - Using certbot debian 10 running apache 
   https://certbot.eff.org/instructions?ws=apache&os=debianbuster
   - Crontab -e "0  0  *  *  6 certbot renew --post-hook "systemctl restart apache2" to make sure the certificate is automatically renewed
+  
+ - Assembled my updated version of sign using GPIO 17 to control with 3.3V. Relay upstream from the sign. Seems to work pretty well. 
