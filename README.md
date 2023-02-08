@@ -197,3 +197,4 @@ Rough Notes:
   - Crontab -e "0  0  *  *  6 certbot renew --post-hook "systemctl restart apache2" to make sure the certificate is automatically renewed
   
  - Assembled my updated version of sign using GPIO 17 to control with 3.3V. Relay upstream from the sign. Seems to work pretty well. 
+ - Looking into this for the OBD https://python-obd.readthedocs.io/en/latest/#:~:text=Getting%20Started-,Welcome,fit%20for%20the%20Raspberry%20Pi.
