@@ -186,3 +186,12 @@ Rough Notes:
   Notes 1/13/23:
   - Don't forget system d custom.service and all the other services that I created thttpd, autossh.service
   - Used python to control the GPIO 17 and add it to the welcome script
+
+  Notes 2/7/23:
+  - Goal here is to configure https
+  - https://domains.google.com/registrar/davidgarges.com/dns?_ga=2.125606090.1174662203.1675820831-259342301.1675820831
+  - davidgarges.com A TTL 1 hour Data 34.127.85.102
+  - /etc/apache2....000-defualt.conf file /var/www/html/Personal_Portfolio_Website (this changes default index)
+  - Using certbot debian 10 running apache 
+  https://certbot.eff.org/instructions?ws=apache&os=debianbuster
+  - Crontab -e "0  0  *  *  6 certbot renew --post-hook "systemctl restart apache2" to make sure the certificate is automatically renewed
