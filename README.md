@@ -201,3 +201,4 @@ Rough Notes:
   
  - Used this https://www.amazon.com/Channel-Optocoupler-Isolated-Control-Arduino/dp/B07XGZSYJV/?_encoding=UTF8&pd_rd_w=u4M0t&content-id=amzn1.sym.bc5f3394-3b4c-4031-8ac0-18107ac75816&pf_rd_p=bc5f3394-3b4c-4031-8ac0-18107ac75816&pf_rd_r=MBFWE53YPEPTEDPBBFEH&pd_rd_wg=VsG3v&pd_rd_r=4ee9c8f0-f4c3-4565-bdcb-2fa42688a68a&ref_=pd_gw_ci_mcx_mr_hp_atf_m
 - Using 3.3V and GPIO 17 to activate the relay which is on the + side of the sign, because the Serial connection has a ground
+- https://python-obd.readthedocs.io/en/latest/
