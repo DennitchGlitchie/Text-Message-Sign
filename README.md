@@ -206,3 +206,8 @@ Rough Notes:
 Notes 8/2/23:
 - Fan: Red (5V, pin 4), Black (GND, pin 6), Blue (GPIO 14, TXD, pin 8)
 - Relay: Yellow (GPIO17, pin 11), Orange (Vin, pin 17)
+
+Notes 8/16/23:
+- Investigated current default udev rules. Serial sign wants USB0 (see write2sign.sh).
+- Plugging in additional devices goes to USB1 ect. They keep their spots if USB0 is unplugged.
+- https://www.sparkfun.com/news/2332
