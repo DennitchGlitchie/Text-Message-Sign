@@ -211,3 +211,11 @@ Notes 8/16/23:
 - Investigated current default udev rules. Serial sign wants USB0 (see write2sign.sh).
 - Plugging in additional devices goes to USB1 ect. They keep their spots if USB0 is unplugged.
 - https://www.sparkfun.com/news/2332
+
+Notes 10/8/23: How to configure auto-response 
+- Setting up a flow in the studio editor
+- Develop -> Phone Numbers -> Active Numbers -> Click number -> Messaging configuration
+- Set "A message comes in" to "Studio Flow"
+- Set "Flow" to "Soiler Womb Auto-responder"
+- Save Configuration
+- To return, set "A message comes in" to "Webhook", URL to "http://34.127.85.102:6081/cgi-bin/myfile.sh", HTTP to "HTTP GET"
